@@ -1,0 +1,2 @@
+from disasterapp import app
+
