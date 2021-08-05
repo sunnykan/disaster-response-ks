@@ -78,26 +78,21 @@ def build_model() -> GridSearchCV:
 
     pipeline = Pipeline(
         [
-            ("cv", CountVectorizer(tokenizer=tokenize)),
+            ("cv", CountVectorizer(max_df=0.5, tokenizer=tokenize)),
             ("transformer", TfidfTransformer()),
             (
                 "rfc",
                 MultiOutputClassifier(
-                    RandomForestClassifier(random_state=42, class_weight="balanced"),
+                    RandomForestClassifier(
+                        random_state=42, class_weight="balanced", min_samples_leaf=5
+                    ),
                     n_jobs=-1,
                 ),
             ),
         ]
     )
 
-    param_grid = {
-        "cv__max_df": (0.5, 1.0),
-        "rfc__estimator__min_samples_leaf": [5, 10],
-    }
-
-    model = GridSearchCV(pipeline, param_grid=param_grid, scoring="f1_micro")
-
-    return model
+    return pipeline
 
 
 def get_metrics(y_test: np.ndarray, y_preds: np.ndarray) -> Dict:
