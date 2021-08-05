@@ -48,8 +48,8 @@ engine = create_engine("sqlite:///data/DisasterResponse.db")
 df = pd.read_sql_table("Message", engine)
 
 # load model
-model = joblib.load("../models/model_rfc_gridsearchcv.pkl")
-
+model = joblib.load("./models/model_rfc.pkl")
+)
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route("/")
