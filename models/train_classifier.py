@@ -5,7 +5,7 @@ from pathlib import Path
 import re
 import numpy as np
 import json
-import pickle
+import dill
 
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
@@ -163,7 +163,9 @@ def save_model(model, model_filepath: str) -> None:
     :param model_filepath: Path of pickle file
     :return: None
     """
-    pickle.dump(model, open(model_filepath, "wb"))
+
+    with open(model_filepath, "wb") as fhand:
+        dill.dump(model, fhand)
 
 
 def main() -> None:

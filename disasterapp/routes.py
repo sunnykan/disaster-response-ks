@@ -1,7 +1,7 @@
 import json
 import plotly
 import pandas as pd
-import joblib
+import dill
 import re
 
 from nltk.stem.wordnet import WordNetLemmatizer
@@ -48,8 +48,8 @@ engine = create_engine("sqlite:///data/DisasterResponse.db")
 df = pd.read_sql_table("Message", engine)
 
 # load model
-model = joblib.load("./models/model_rfc.pkl")
-
+with open("./models/model_rfc.pkl", "rb") as fhand:
+    model = dill.load(fhand)
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route("/")
