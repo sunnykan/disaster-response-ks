@@ -1,8 +1,8 @@
 import json
 import plotly
 import pandas as pd
-import dill
 import re
+import dill
 
 from nltk.stem.wordnet import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
