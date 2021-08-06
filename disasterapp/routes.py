@@ -48,7 +48,7 @@ engine = create_engine("sqlite:///data/DisasterResponse.db")
 df = pd.read_sql_table("Message", engine)
 
 # load model
-with open("./models/model_rfc.pkl", "rb") as fhand:
+with open("./models/model_logistic.pkl", "rb") as fhand:
     model = dill.load(fhand)
 
 # index webpage displays cool visuals and receives user input text for model
