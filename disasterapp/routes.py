@@ -4,8 +4,8 @@ import pandas as pd
 import re
 import dill
 
+from models.utils import tokenize
 from disasterapp import app
-from disasterapp import tokenize
 
 from flask import render_template, request, jsonify
 import plotly.graph_objects as gro
