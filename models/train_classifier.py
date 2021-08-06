@@ -11,8 +11,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.multioutput import MultiOutputClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
 
@@ -78,13 +77,17 @@ def build_model() -> GridSearchCV:
 
     pipeline = Pipeline(
         [
-            ("cv", CountVectorizer(max_df=0.5, tokenizer=tokenize)),
+            ("cv", CountVectorizer(tokenizer=tokenize)),
             ("transformer", TfidfTransformer()),
             (
                 "rfc",
                 MultiOutputClassifier(
-                    RandomForestClassifier(
-                        random_state=42, class_weight="balanced", min_samples_leaf=5
+                    LogisticRegression(
+                        penalty="l1",
+                        C=0.10,
+                        multi_class="ovr",
+                        class_weight="balanced",
+                        solver="liblinear",
                     ),
                     n_jobs=-1,
                 ),
