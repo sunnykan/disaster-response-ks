@@ -2,4 +2,3 @@ stopwords
 words
 wordnet
 punkt
-word_tokenize
