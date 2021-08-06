@@ -17,7 +17,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
 
-from models.utils import tokenize
+from disasterapp import tokenize
 
 
 def load_data(database_filepath: str) -> Tuple[np.ndarray, np.ndarray, List]:
