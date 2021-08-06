@@ -1,3 +1,4 @@
+from sqlalchemy import create_engine
 import pandas as pd
 import argparse
 from pathlib import Path
@@ -5,9 +6,6 @@ import re
 import numpy as np
 import json
 import dill
-
-from sqlalchemy import create_engine
-from typing import List, Tuple, Dict, Set
 
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
@@ -17,7 +15,18 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import classification_report
 
-from disasterapp import tokenize
+from nltk.stem.wordnet import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk.corpus import words
+
+from typing import List, Tuple, Dict, Set
+
+# create a set of English words using a corpus
+stop_words: List = stopwords.words("english")
+vocab: Set = set(words.words()) - set(stop_words)
+lemmatizer = WordNetLemmatizer()
+words_set: set = {lemmatizer.lemmatize(word) for word in vocab}
 
 
 def load_data(database_filepath: str) -> Tuple[np.ndarray, np.ndarray, List]:
@@ -38,6 +47,25 @@ def load_data(database_filepath: str) -> Tuple[np.ndarray, np.ndarray, List]:
     output_labels = list(df.iloc[:, :-3].columns)
 
     return X, Y, output_labels
+
+
+def tokenize(text: str) -> List:
+    """
+    Tokenize and lemmatize text
+
+    :param text: Text to be tokenized
+    :return: List of lemmatized word tokens
+    """
+
+    text = re.sub(r"[^a-zA-Z]", " ", text.lower())
+    tokens = word_tokenize(text)
+    lemmatizer = WordNetLemmatizer()
+
+    clean_tokens = [
+        lemmatizer.lemmatize(token).strip() for token in tokens if token in words_set
+    ]
+
+    return clean_tokens
 
 
 def build_model() -> Pipeline:
