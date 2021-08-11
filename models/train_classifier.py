@@ -5,6 +5,7 @@ import numpy as np
 import json
 import pickle
 from pathlib import Path
+
 from utility.utils import tokenize
 
 from sklearn.model_selection import train_test_split
