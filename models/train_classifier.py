@@ -1,12 +1,11 @@
 from sqlalchemy import create_engine
 import pandas as pd
 import argparse
-import re
 import numpy as np
 import json
-import dill
+import pickle
 from pathlib import Path
-from utils.utils import tokenize
+from utility.utils import tokenize
 
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
@@ -139,7 +138,7 @@ def save_model(model, model_filepath: str) -> None:
     """
 
     with open(model_filepath, "wb") as fhand:
-        dill.dump(model, fhand)
+        pickle.dump(model, fhand)
 
 
 def main() -> None:

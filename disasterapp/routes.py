@@ -1,19 +1,14 @@
+from disasterapp import app
+
 import json
 import plotly
 import pandas as pd
-import re
-import dill
+import joblib
 
-from nltk.stem.wordnet import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.corpus import words
-
-from disasterapp import app
 from flask import render_template, request, jsonify
 import plotly.graph_objects as gro
 from sqlalchemy import create_engine
-from utils.utils import tokenize
+from utility.utils import tokenize
 from typing import List
 
 
@@ -23,7 +18,7 @@ df = pd.read_sql_table("Message", engine)
 
 # load model
 with open("./models/model_logistic.pkl", "rb") as fhand:
-    model = dill.load(fhand)
+    model = joblib.load(fhand)
 
 # index webpage displays cool visuals and receives user input text for model
 @app.route("/")

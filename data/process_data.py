@@ -64,7 +64,7 @@ def save_data(df: pd.DataFrame, database_filename: str) -> None:
     df.to_sql("Message", engine, if_exists="replace", index=False)
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("Messages", help="filepath: messages data")
     parser.add_argument("Categories", help="filepath: categories data")
