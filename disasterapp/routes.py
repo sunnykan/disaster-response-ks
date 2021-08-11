@@ -13,38 +13,12 @@ from disasterapp import app
 from flask import render_template, request, jsonify
 import plotly.graph_objects as gro
 from sqlalchemy import create_engine
+from utils.utils import tokenize
 from typing import List
 
 
-# create a set of English words using a corpus
-stop_words = stopwords.words("english")
-vocab = set(words.words())
-vocab = vocab - set(stop_words)
-lemmatizer = WordNetLemmatizer()
-words_set = {lemmatizer.lemmatize(word) for word in vocab}
-
-
-def tokenize(text: str) -> List:
-    """
-    Tokenize and lemmatize text
-
-    :param text: Text to be tokenized
-    :return: List of lemmatized word tokens
-    """
-
-    text = re.sub(r"[^a-zA-Z]", " ", text.lower())
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = [
-        lemmatizer.lemmatize(token).strip() for token in tokens if token in words_set
-    ]
-
-    return clean_tokens
-
-
 # load data
-engine = create_engine("sqlite:///data/DisasterResponse.db")
+engine = create_engine("sqlite:///./data/DisasterResponse.db")
 df = pd.read_sql_table("Message", engine)
 
 # load model
@@ -121,4 +95,3 @@ def go():
     return render_template(
         "go.html", query=query, classification_result=classification_results
     )
-
