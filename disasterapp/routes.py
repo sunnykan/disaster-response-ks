@@ -11,7 +11,7 @@ from sqlalchemy import create_engine
 
 # from utils import tokenize
 from typing import List
-from disasterapp.utils import tokenize
+from utils import tokenize
 
 
 # load data
