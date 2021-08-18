@@ -8,7 +8,7 @@ import joblib
 from flask import render_template, request, jsonify
 import plotly.graph_objects as gro
 from sqlalchemy import create_engine
-from utility.utils import tokenize
+from utils import tokenize
 from typing import List
 
 
